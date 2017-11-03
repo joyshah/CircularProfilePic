@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="circularBorderColor">#0c55ff</color>
+    <color name="concentricCircleColor">#0c55ff</color>
+</resources>
