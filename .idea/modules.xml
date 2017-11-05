@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CircularProfilePic.iml" filepath="$PROJECT_DIR$/CircularProfilePic.iml" />
       <module fileurl="file://$PROJECT_DIR$/CircularProfileUpload2.iml" filepath="$PROJECT_DIR$/CircularProfileUpload2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/circularprofilepiclibrary/circularprofilepiclibrary.iml" filepath="$PROJECT_DIR$/circularprofilepiclibrary/circularprofilepiclibrary.iml" />

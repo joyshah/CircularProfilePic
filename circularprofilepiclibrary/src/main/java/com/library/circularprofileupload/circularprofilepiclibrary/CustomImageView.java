@@ -45,7 +45,7 @@ public class CustomImageView extends AppCompatImageView {
     public CustomImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        icon1 = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add_black_24dp);
+        icon1 = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add_bl_24dp);
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
