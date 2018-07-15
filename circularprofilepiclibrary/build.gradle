@@ -1,5 +1,30 @@
 apply plugin: 'com.android.library'
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'CircularProfile'
 
+    publishedGroupId = 'com.customcontrol.profile'
+    libraryName = 'CircularProfile'
+    artifact = 'Circular-Profile'
+
+    libraryDescription = 'A Circular image view for profile image with update button.'
+
+    siteUrl = 'https://github.com/joyshah/CircularProfilePic'
+    gitUrl = 'https://github.com/joyshah/CircularProfilePic.git'
+
+    libraryVersion = '0.0.1'
+
+    developerId = 'joy0803'
+    developerName = 'Joy Shah'
+    developerEmail = 'shahjoy831994@gmail.com'
+
+    licenseName = 'GPL v3'
+    licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+    allLicenses = ["GPL v3"]
+
+    apply from: 'https://raw.githubusercontent.com/joy0803/JCenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/joy0803/JCenter/master/bintrayv1.gradle'
+}
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
