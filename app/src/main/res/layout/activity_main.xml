@@ -7,23 +7,17 @@
     android:background="@color/colorAccent"
     tools:context="com.library.circularprofileupload.circularprofileupload.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/circularBorderColor">
-
 
         <com.library.circularprofileupload.circularprofilepiclibrary.CircularProfile
             android:id="@+id/img1"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:src="@drawable/joy1"
             app:circular_border_color="@color/colorAccent"
 
             app:concentric_circle_color="#b91a1a" />
 
-    </RelativeLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn"

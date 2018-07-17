@@ -3,12 +3,14 @@ package com.library.circularprofileupload.circularprofilepiclibrary;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -60,15 +62,67 @@ public class CircularProfile extends AppCompatImageView {
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
         }
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
+        try {
+            Bitmap bitmap;
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-        return bitmap;
+    public static Bitmap getRoundBitmap(Bitmap bmp, int radius) {
+        Bitmap sBmp;
+
+        if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
+            float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
+            float factor = smallest / radius;
+            sBmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() / factor), (int) (bmp.getHeight() / factor), false);
+        } else {
+            sBmp = bmp;
+        }
+
+        Bitmap bitmap = sBmp;
+        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        paint.setShader(shader);
+        paint.setAntiAlias(true);
+        Canvas c = new Canvas(circleBitmap);
+        c.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, radius / 2, paint);
+
+        return sBmp;
+   /*     Bitmap output = Bitmap.createBitmap(radius, radius,
+                Bitmap.Config.ARGB_8888);
+
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xffa19774;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, radius, radius);
+
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(Color.parseColor("#BAB399"));
+        canvas.drawCircle(radius / 2 + 0.7f,
+                radius / 2 + 0.7f, radius / 2 + 0.1f, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(sBmp, rect, rect, paint);*/
+
     }
 
     private void init(AttributeSet attrs) {
@@ -123,7 +177,6 @@ public class CircularProfile extends AppCompatImageView {
         mConcentricCirclePaint.setStyle(Paint.Style.FILL);
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         mWidth = getWidth();
@@ -139,8 +192,8 @@ public class CircularProfile extends AppCompatImageView {
     }
 
     private void drawCircularImage(Canvas canvas) {
-        getRoundedCroppedBitmap(mCircularBorderRadius + mCircularBorderRadius);
-        canvas.drawBitmap(inputBitmap, mWidth / 2 - mCircularBorderRadius, mHeight / 2 - mCircularBorderRadius, null);
+        //getRoundedCroppedBitmap(mCircularBorderRadius + mCircularBorderRadius);
+        canvas.drawBitmap(getRoundBitmap(inputBitmap, mCircularBorderRadius + mCircularBorderRadius), mWidth / 2 - mCircularBorderRadius, mHeight / 2 - mCircularBorderRadius, null);
     }
 
     private void drawCircularCircle(Canvas canvas) {
@@ -161,7 +214,6 @@ public class CircularProfile extends AppCompatImageView {
                 (float) ((int) (((double) ((mHeight / 2) - (mConcentricCircleImage.getHeight() / 2))) + (((double) (mCircularBorderRadius)) * Math.sin(Math.toRadians(mConcentricCircleDegree))))),
                 null);
     }
-
 
     private void setCircularBorderRadius() {
         if (mInputCircularBorderRadius == -1 || !((mInputCircularBorderRadius > 0 && (mInputCircularBorderRadius < mWidth / 2 || mInputCircularBorderRadius < mHeight / 2)))) {
@@ -231,7 +283,8 @@ public class CircularProfile extends AppCompatImageView {
     }
 
     public void getRoundedCroppedBitmap(int diameter) {
-        inputBitmap = resize(inputBitmap, diameter, diameter);
+        //inputBitmap = resize(inputBitmap, diameter, diameter);
+
         Bitmap output = Bitmap.createBitmap(inputBitmap.getWidth(),
                 inputBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -242,11 +295,13 @@ public class CircularProfile extends AppCompatImageView {
         paint.setColor(Color.parseColor("#BAB399"));
 
         final Rect rect = new Rect(0, 0, inputBitmap.getWidth(), inputBitmap.getHeight());
+        final Rect rect1 = new Rect(0, 0, getWidth(), getHeight());
         canvas.drawARGB(0, 0, 0, 0);
-        canvas.drawCircle(inputBitmap.getWidth() / 2 + 0.7f, inputBitmap.getHeight() / 2 + 0.7f, inputBitmap.getWidth() / 2 + 0.1f, paint);
+        canvas.drawCircle(inputBitmap.getWidth() / 2, inputBitmap.getHeight() / 2, inputBitmap.getWidth() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(inputBitmap, rect, rect, paint);
+        canvas.drawBitmap(inputBitmap, rect, rect1, paint);
         inputBitmap = output;
+
     }
 
     @Override
@@ -261,10 +316,14 @@ public class CircularProfile extends AppCompatImageView {
                 Log.i("x", "x:" + newx);
                 Log.i("y", "y:" + newy);
                 if (newx < concentricCircleCentreX + mConcentricCircleRadius && newx > concentricCircleCentreX - mConcentricCircleRadius
-                        && newy < concentricCircleCentreY + mConcentricCircleRadius && newy > concentricCircleCentreY - mConcentricCircleRadius)
-                    mCircularProfileClickListener.onConcentricCircleClick();
-                else
-                    mCircularProfileClickListener.onClick();
+                        && newy < concentricCircleCentreY + mConcentricCircleRadius && newy > concentricCircleCentreY - mConcentricCircleRadius) {
+                    if (mCircularProfileClickListener != null) {
+                        mCircularProfileClickListener.onConcentricCircleClick();
+                    }
+                } else {
+                    if (mCircularProfileClickListener != null)
+                        mCircularProfileClickListener.onClick();
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;

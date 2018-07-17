@@ -1,18 +1,18 @@
 apply plugin: 'com.android.library'
 ext {
-    bintrayRepo = 'maven'
+    bintrayRepo = 'Maven'
     bintrayName = 'CircularProfile'
 
     publishedGroupId = 'com.customcontrol.profile'
-    libraryName = 'CircularProfile'
-    artifact = 'Circular-Profile'
+    libraryName = 'circularprofilepiclibrary'
+    artifact = 'circularprofilepiclibrary'
 
     libraryDescription = 'A Circular image view for profile image with update button.'
 
     siteUrl = 'https://github.com/joyshah/CircularProfilePic'
     gitUrl = 'https://github.com/joyshah/CircularProfilePic.git'
 
-    libraryVersion = '0.0.1'
+    libraryVersion = '1.0.0'
 
     developerId = 'joy0803'
     developerName = 'Joy Shah'
@@ -22,18 +22,18 @@ ext {
     licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
     allLicenses = ["GPL v3"]
 
-    apply from: 'https://raw.githubusercontent.com/joy0803/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/joy0803/JCenter/master/bintrayv1.gradle'
+
 }
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
 
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -51,6 +51,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
