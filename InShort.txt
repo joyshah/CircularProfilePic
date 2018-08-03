@@ -1,0 +1,36 @@
+bean
+id
+constructor-arg-	value						--index,value---type,value---value----from Spring 3.0 we can use name,value
+property-	name,value,type
+scope-		prototype,singleton,request,session
+autowire-	byName,byType,constructor				
+parent-		list merge="true" else override
+
+<context:annotation-config/>
+<bean >
+
+<list>or <set>		---<ref bean="">--<value></value>
+<map>			--<entry key="" value=""/> ---<entry key="" value-ref=""/>	
+<prop>			--<prop key="string">string<prop/>(must be string)
+
+interfaces
+Implemented in own Class-
+	ApplicationContextAware
+	BeanNameAware
+	IntializingBean
+	DisposableBean
+	x
+Implement in new class-
+	BeanPostProcessor
+	<bean class=”classname implementing BeanPostProcessor”/>
+
+Spring Annoation
+@Required
+@AutoWired
+@Qualifier
+
+JSR-250
+@resource
+@component-service,controller,repository
+@postConstruct
+@preDestroy
